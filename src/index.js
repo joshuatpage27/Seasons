@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import SeasonDisplay from './SeasonDisplay.js';
+import Loading from './Loading.js';
 
 class App extends React.Component {
 	constructor(props) {
@@ -15,15 +16,19 @@ class App extends React.Component {
 		(err) => this.setState({ errormessage: err.message })
 		);
 	};
-	//React says we have to define render
-	render() {
+
+	renderContent() {
 		if (this.state.errorMessage && !this.state.lat) {
 			return <div>Error: {this.state.errorMessage}</div>;
 		}
 		if (!this.state.errorMessage && this.state.lat) {
 			return <SeasonDisplay lat={this.state.lat} />
 		}
-		return <div>Loading...</div>;
+		return <Loading message="Please accept location request" />;
+	}
+
+	render() {
+		return <div>{this.renderContent()}</div>;
 	}
 };
 
